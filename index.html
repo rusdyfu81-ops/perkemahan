@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lorong Waktu — 42 Perkemahan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:radial-gradient(ellipse at top,#2a1d10,#0d0a04 70%);color:#f0e6cf;font-family:'Crimson Pro',Georgia,serif;padding:5vh 4vw}
+h1{font-family:'Cinzel',Georgia,serif;font-weight:900;font-size:clamp(28px,3.6vw,60px);color:#c9a84c;text-align:center;text-shadow:0 0 30px rgba(201,168,76,.4)}
+.sub{text-align:center;font-style:italic;font-size:clamp(16px,1.5vw,24px);color:#d8c9a4;margin:.6vh 0 3vh}
+h2{font-family:'Cinzel',Georgia,serif;font-size:clamp(15px,1.3vw,22px);letter-spacing:.14em;color:#a88a44;margin:3vh 0 1.2vh}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1vw}
+.tile{display:block;text-decoration:none;color:inherit;border:1px solid #5a4718;border-radius:12px;padding:1.6vh 1vw;background:rgba(25,19,7,.9);transition:transform .15s,border-color .15s}
+.tile .n{font-family:'Cinzel',Georgia,serif;font-weight:900;font-size:clamp(20px,2vw,34px);color:#e8c97a;line-height:1}
+.tile .t{font-family:'Cinzel',Georgia,serif;font-size:clamp(13px,1.05vw,18px);margin-top:.6vh}
+.tile.off{opacity:.35;pointer-events:none}
+.tile.off .t::after{content:' · segera';font-family:'Crimson Pro',Georgia,serif;font-style:italic}
+a.tile:hover,a.tile:focus{transform:translateY(-3px);border-color:#e8c97a;outline:none}
+.note{margin-top:4vh;text-align:center;font-size:clamp(13px,1.1vw,18px);color:#a88a44}
+</style>
+</head>
+<body>
+<h1>Lorong Waktu</h1>
+<div class="sub">42 perkemahan dari Mesir ke Kanaan</div>
+<div id="menu"></div>
+<div class="note" id="note"></div>
+<script>
+// file names in kemah/ that exist; a tile becomes a link when its number is listed here
+const READY = { 1: '01-sukot.html', 2: '02-etam.html', 3: '03-migdol.html', 4: '04-mara.html', 7: '07-manna.html', 9: '09-alus.html', 10: '10-rafidim.html', 11: '11-sinai.html', 12: '12-kibrot.html', 13: '13-hazerot.html', 14: '14-ritma.html', 15: '15-rimon.html', 20: '20-harada.html', 21: '21-makhelot.html', 22: '22-tahat.html', 27: '27-bene-yaakan.html', 32: '32-kadesh.html', 35: '35-funon.html', 36: '36-obot.html', 40: '40-abarim.html', 41: '41-moab.html', 42: '42-gilgal.html', Y: 'yerikho.html' };
+const PARTS = [
+  ['BAGIAN I · RAMESES → SINAI', [[1,'Sukot'],[2,'Etam'],[3,'Di Hadapan Migdol'],[4,'Mara'],[5,'Elim'],[6,'Tepi Laut Teberau'],[7,'Padang Gurun Sin'],[8,'Dofka'],[9,'Alus'],[10,'Rafidim']]],
+  ['BAGIAN II · SINAI → RITMA', [[11,'Padang Gurun Sinai'],[12,'Kibrot-Taawa'],[13,'Hazerot'],[14,'Ritma']]],
+  ['BAGIAN III · 38 TAHUN', [[15,'Rimon-Peros'],[16,'Libna'],[17,'Risa'],[18,'Kehelata'],[19,'Har-Syafer'],[20,'Harada'],[21,'Makhelot'],[22,'Tahat'],[23,'Tarah'],[24,'Mitka'],[25,'Hasmona'],[26,'Moserot'],[27,'Bene-Yaakan'],[28,'Hor-Gidgad'],[29,'Yotbata'],[30,'Abrona'],[31,'Ezion-Geber']]],
+  ['BAGIAN IV · KADESH → IYE-ABARIM', [[32,'Kadesh'],[33,'Gunung Hor'],[34,'Zalmona'],[35,'Funon'],[36,'Obot'],[37,'Iye-Abarim']]],
+  ['BAGIAN V · ZERED → GILGAL', [[38,'Dibon-Gad'],[39,'Almon-Diblataim'],[40,'Pegunungan Abarim'],[41,'Dataran Moab'],[42,'Gilgal'],['Y','Yerikho']]]
+];
+// petunjuk menyesuaikan: dibuka dari web (https) atau dari komputer sendiri
+const online = location.protocol === 'https:';
+document.getElementById('note').innerHTML = (online
+  ? 'Buka di <b>Google Chrome</b> · izinkan <b>kamera</b> dan <b>mikrofon</b> saat diminta · pemuatan pertama mengunduh ±15 MB, sesudah itu tersimpan di browser'
+  : 'Jalankan <b>jalankan.bat</b> lalu buka di Chrome: <b>http://localhost:8765</b> · kamera dan mic tidak jalan di pratinjau aplikasi lain')
+  + '<br><a href="untuk-guru.html" style="color:#e8c97a">Ringkasan untuk guru &amp; cara mengirim ide &rarr;</a>';
+
+document.getElementById('menu').innerHTML = PARTS.map(([title, camps]) => `<h2>${title}</h2><div class="grid">` +
+  camps.map(([n, name]) => READY[n]
+    ? `<a class="tile" href="kemah/${READY[n]}"><div class="n">#${n}</div><div class="t">${name}</div></a>`
+    : `<div class="tile off"><div class="n">#${n}</div><div class="t">${name}</div></div>`).join('') + '</div>').join('');
+</script>
+</body>
+</html>
